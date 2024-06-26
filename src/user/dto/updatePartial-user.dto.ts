@@ -1,14 +1,17 @@
-import { IsString, Matches } from "class-validator";
+import { IsOptional, IsString, Matches } from "class-validator";
 
 export class UpdatePartialUserDTO {
+  @IsOptional()
   @IsString()
-  name: string;
+  name?: string;
 
+  @IsOptional()
   @Matches(/^\(?\d{2}\)?[\s-]?[\s9]?\d{4}-?\d{4}$/, {
     message: "Invalid phone number",
   })
-  phone: string;
+  phone?: string;
 
+  @IsOptional()
   @IsString()
-  city: string;
+  city?: string;
 }

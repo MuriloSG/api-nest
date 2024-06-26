@@ -59,10 +59,7 @@ export class UserService {
     return userExists;
   }
 
-  async update(
-    id: number,
-    { name, phone, city }: UpdatePartialUserDTO,
-  ): Promise<AppUser> {
+  async update(id: number, updateData: UpdatePartialUserDTO): Promise<AppUser> {
     const userExists = await this.prisma.appUser.findUnique({
       where: {
         id,
@@ -73,24 +70,26 @@ export class UserService {
       throw new NotFoundException("User not found");
     }
 
-    const phoneExists = await this.prisma.appUser.findUnique({
-      where: {
-        phone,
-      },
-    });
-    if (phoneExists) {
-      throw new ConflictException("Phone number is already in use");
+    if (updateData.phone && updateData.phone !== userExists.phone) {
+      const phoneInUse = await this.prisma.appUser.findFirst({
+        where: {
+          phone: updateData.phone,
+          id: { not: id }, // Isso exclui o proprio usuario da busca, Garantia
+        },
+      });
+
+      if (phoneInUse) {
+        throw new ConflictException(
+          `Phone number ${updateData.phone} is already in use`,
+        );
+      }
     }
 
     const user = await this.prisma.appUser.update({
       where: {
         id,
       },
-      data: {
-        name,
-        phone,
-        city,
-      },
+      data: updateData,
     });
     return user;
   }

@@ -40,13 +40,9 @@ export class UserController {
   @Patch(":id")
   async update(
     @Param("id", ParseIntPipe) id: number,
-    @Body() { name, phone, city }: UpdatePartialUserDTO,
+    @Body() updateData: UpdatePartialUserDTO,
   ) {
-    return this.userService.update(id, {
-      name,
-      phone,
-      city,
-    });
+    return this.userService.update(id, updateData);
   }
 
   @Delete(":id")
