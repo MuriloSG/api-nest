@@ -19,7 +19,17 @@ export class UserService {
     phone,
     city,
   }: CreateUserDTO): Promise<AppUser> {
-    return this.prisma.appUser.create({
+    const userExits = await this.prisma.appUser.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (userExits) {
+      throw new ConflictException("Email is already in use");
+    }
+
+    const user = await this.prisma.appUser.create({
       data: {
         name,
         email,
@@ -28,6 +38,8 @@ export class UserService {
         city,
       },
     });
+
+    return user;
   }
 
   async getAll(): Promise<AppUser[]> {
@@ -67,7 +79,7 @@ export class UserService {
       },
     });
     if (phoneExists) {
-      throw new ConflictException(`Phone number is already in use`);
+      throw new ConflictException("Phone number is already in use");
     }
 
     const user = await this.prisma.appUser.update({
