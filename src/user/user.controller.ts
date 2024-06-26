@@ -33,13 +33,13 @@ export class UserController {
   }
 
   @Get(":id")
-  async getById(@Param("id", ParseIntPipe) id) {
+  async getById(@Param("id", ParseIntPipe) id: number) {
     return this.userService.getById(id);
   }
 
   @Patch(":id")
   async updatePartial(
-    @Param("id", ParseIntPipe) id,
+    @Param("id", ParseIntPipe) id: number,
     @Body() { name, phone, city }: UpdatePartialUserDTO,
   ) {
     return {
@@ -50,7 +50,7 @@ export class UserController {
   }
 
   @Delete(":id")
-  async delete(@Param("id", ParseIntPipe) id) {
+  async delete(@Param("id", ParseIntPipe) id: number) {
     return {
       id,
     };
