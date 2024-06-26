@@ -59,4 +59,12 @@ export class UserService {
     });
     return user;
   }
+
+  async delete(id: number): Promise<AppUser> {
+    return this.prisma.appUser.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }
