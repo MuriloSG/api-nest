@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { CreateUserDTO } from "./dto/create-user.dto";
 import { PrismaService } from "src/prisma/prisma.service";
 import { AppUser } from "@prisma/client";
@@ -47,6 +51,25 @@ export class UserService {
     id: number,
     { name, phone, city }: UpdatePartialUserDTO,
   ): Promise<AppUser> {
+    const userExists = await this.prisma.appUser.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!userExists) {
+      throw new NotFoundException("User not found");
+    }
+
+    const phoneExists = await this.prisma.appUser.findUnique({
+      where: {
+        phone,
+      },
+    });
+    if (phoneExists) {
+      throw new ConflictException(`Phone number is already in use`);
+    }
+
     const user = await this.prisma.appUser.update({
       where: {
         id,

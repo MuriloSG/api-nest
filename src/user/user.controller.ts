@@ -42,11 +42,11 @@ export class UserController {
     @Param("id", ParseIntPipe) id: number,
     @Body() { name, phone, city }: UpdatePartialUserDTO,
   ) {
-    return {
+    return this.userService.update(id, {
       name,
       phone,
       city,
-    };
+    });
   }
 
   @Delete(":id")
