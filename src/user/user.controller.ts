@@ -34,7 +34,7 @@ export class UserController {
 
   @Get(":id")
   async getById(@Param("id", ParseIntPipe) id) {
-    return { user: {}, id };
+    return this.userService.getById(id);
   }
 
   @Patch(":id")

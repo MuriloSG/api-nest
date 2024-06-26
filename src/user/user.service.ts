@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { CreateUserDTO } from "./dto/create-user.dto";
 import { PrismaService } from "src/prisma/prisma.service";
 import { AppUser } from "@prisma/client";
@@ -27,5 +27,18 @@ export class UserService {
 
   async getAll(): Promise<AppUser[]> {
     return this.prisma.appUser.findMany();
+  }
+
+  async getById(id: number): Promise<AppUser> {
+    const userExists = await this.prisma.appUser.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!userExists) {
+      throw new NotFoundException("User not found");
+    }
+
+    return userExists;
   }
 }
