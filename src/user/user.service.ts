@@ -24,4 +24,8 @@ export class UserService {
       },
     });
   }
+
+  async getAll(): Promise<AppUser[]> {
+    return this.prisma.appUser.findMany();
+  }
 }

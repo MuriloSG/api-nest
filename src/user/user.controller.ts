@@ -29,7 +29,7 @@ export class UserController {
 
   @Get()
   async getAll() {
-    return { users: [] };
+    return this.userService.getAll();
   }
 
   @Get(":id")
