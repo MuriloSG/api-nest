@@ -3,12 +3,14 @@ import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
 import { AppModule } from "./app.module";
 import { ValidationPipe } from "@nestjs/common";
 import * as dotenv from "dotenv";
+import { LogsInterceptor } from "./interceptors/log.interceptor";
 
 dotenv.config();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalInterceptors(new LogsInterceptor());
   const config = new DocumentBuilder()
     .setTitle("Api-scheduling")
     .setDescription("Generic scheduling API")
