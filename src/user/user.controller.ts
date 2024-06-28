@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Patch, Post } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Patch,
+  Post,
+  UseGuards,
+} from "@nestjs/common";
 import { CreateUserDTO } from "./dto/create-user.dto";
 import { UpdatePartialUserDTO } from "./dto/updatePartial-user.dto";
 import { UserService } from "./user.service";
@@ -12,13 +20,16 @@ import {
 } from "@nestjs/swagger";
 import { Roles } from "src/decorators/roles.decorator";
 import { Role } from "src/enums/role.enum";
+import { RoleGuard } from "src/guards/role.guard";
+import { AuthGuard } from "src/guards/auth.guard";
 
+@Roles(Role.Admin)
+@UseGuards(AuthGuard, RoleGuard) //Gerenciando acesso dessas rotas de acordo com as Roles dos usuarios logados, a ordem dos guard é importante
 @ApiTags("users")
 @Controller("users")
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Roles(Role.Admin)
   @Post()
   @ApiOperation({ summary: "Create a new user" })
   @ApiBody({ type: CreateUserDTO })
@@ -28,7 +39,6 @@ export class UserController {
     return this.userService.create(createUserDTO);
   }
 
-  @Roles(Role.Admin)
   @Get()
   @ApiOperation({ summary: "Get all users" })
   @ApiResponse({ status: 200, description: "Return all users" })
@@ -36,7 +46,6 @@ export class UserController {
     return this.userService.getAll();
   }
 
-  @Roles(Role.Admin)
   @Get(":id")
   @ApiOperation({ summary: "Get user by ID" })
   @ApiParam({ name: "id", description: "User ID", type: Number })
@@ -46,7 +55,6 @@ export class UserController {
     return this.userService.getById(id);
   }
 
-  @Roles(Role.Admin)
   @Patch(":id")
   @ApiOperation({ summary: "Update user by ID" })
   @ApiParam({ name: "id", description: "User ID", type: Number })
@@ -60,7 +68,6 @@ export class UserController {
     return this.userService.update(id, updateData);
   }
 
-  @Roles(Role.Admin)
   @Delete(":id")
   @ApiOperation({ summary: "Delete user by ID" })
   @ApiParam({ name: "id", description: "User ID", type: Number })
