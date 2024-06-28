@@ -18,6 +18,7 @@ export class UserService {
     password,
     phone,
     city,
+    role,
   }: CreateUserDTO): Promise<AppUser> {
     const userExits = await this.prisma.appUser.findUnique({
       where: {
@@ -36,6 +37,7 @@ export class UserService {
         password,
         phone,
         city,
+        role,
       },
     });
 
@@ -58,6 +60,7 @@ export class UserService {
         password: false,
         phone: true,
         city: true,
+        role: true,
         createdAt: true,
         updateAt: true,
       },

@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsOptional, IsString, Matches } from "class-validator";
+import { IsEnum, IsOptional, IsString, Matches } from "class-validator";
+import { Role } from "src/enums/role.enum";
 
 export class UpdatePartialUserDTO {
   @ApiProperty({
@@ -24,4 +25,11 @@ export class UpdatePartialUserDTO {
   @IsOptional()
   @IsString()
   city?: string;
+
+  @ApiProperty({
+    example: "1 para Admin, 2 para User",
+  })
+  @IsOptional()
+  @IsEnum(Role)
+  role?: number;
 }
