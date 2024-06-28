@@ -51,12 +51,22 @@ export class UserService {
       where: {
         id,
       },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        password: false,
+        phone: true,
+        city: true,
+        createdAt: true,
+        updateAt: true,
+      },
     });
     if (!userExists) {
       throw new NotFoundException("User not found");
     }
 
-    return userExists;
+    return userExists as AppUser;
   }
 
   async update(id: number, updateData: UpdatePartialUserDTO): Promise<AppUser> {
