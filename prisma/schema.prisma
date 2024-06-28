@@ -14,6 +14,7 @@ model AppUser {
   password String
   phone    String @unique
   city     String
+  role     Int    @default(1)
   createdAt DateTime @default(now())
   updateAt DateTime @updatedAt
 
