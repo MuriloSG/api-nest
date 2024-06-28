@@ -12,7 +12,7 @@ import { UserService } from "src/user/user.service";
 
 @Injectable()
 export class AuthService {
-  private issuer: "Api nest js";
+  private issuer = "Api nest js";
   constructor(
     private readonly jwtService: JwtService,
     private readonly prisma: PrismaService,
