@@ -10,12 +10,15 @@ import {
   ApiResponse,
   ApiTags,
 } from "@nestjs/swagger";
+import { Roles } from "src/decorators/roles.decorator";
+import { Role } from "src/enums/role.enum";
 
 @ApiTags("users")
 @Controller("users")
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Roles(Role.Admin)
   @Post()
   @ApiOperation({ summary: "Create a new user" })
   @ApiBody({ type: CreateUserDTO })
@@ -25,6 +28,7 @@ export class UserController {
     return this.userService.create(createUserDTO);
   }
 
+  @Roles(Role.Admin)
   @Get()
   @ApiOperation({ summary: "Get all users" })
   @ApiResponse({ status: 200, description: "Return all users" })
@@ -32,6 +36,7 @@ export class UserController {
     return this.userService.getAll();
   }
 
+  @Roles(Role.Admin)
   @Get(":id")
   @ApiOperation({ summary: "Get user by ID" })
   @ApiParam({ name: "id", description: "User ID", type: Number })
@@ -41,6 +46,7 @@ export class UserController {
     return this.userService.getById(id);
   }
 
+  @Roles(Role.Admin)
   @Patch(":id")
   @ApiOperation({ summary: "Update user by ID" })
   @ApiParam({ name: "id", description: "User ID", type: Number })
@@ -54,6 +60,7 @@ export class UserController {
     return this.userService.update(id, updateData);
   }
 
+  @Roles(Role.Admin)
   @Delete(":id")
   @ApiOperation({ summary: "Delete user by ID" })
   @ApiParam({ name: "id", description: "User ID", type: Number })
