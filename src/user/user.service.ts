@@ -7,6 +7,7 @@ import { CreateUserDTO } from "./dto/create-user.dto";
 import { PrismaService } from "src/prisma/prisma.service";
 import { AppUser } from "@prisma/client";
 import { UpdatePartialUserDTO } from "./dto/updatePartial-user.dto";
+import * as bcrypt from "bcrypt";
 
 @Injectable()
 export class UserService {
@@ -20,6 +21,7 @@ export class UserService {
     city,
     role,
   }: CreateUserDTO): Promise<AppUser> {
+    const hashedPassword = await bcrypt.hash(password, await bcrypt.genSalt());
     const userExits = await this.prisma.appUser.findUnique({
       where: {
         email,
@@ -34,7 +36,7 @@ export class UserService {
       data: {
         name,
         email,
-        password,
+        password: hashedPassword,
         phone,
         city,
         role,
