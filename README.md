@@ -37,3 +37,6 @@ RBAC (Role-Based Access Control) é uma estratégia de autorização que define 
 
 ### Circular Dependency
 Dependências circulares ocorrem quando dois ou mais módulos ou serviços dependem uns dos outros, criando um loop que impede a inicialização correta. Para resolver esse problema no Nest.js, é possível utilizar o decorator `forwardRef` ao importar módulos com dependências circulares. Isso permite que os módulos referenciem uns aos outros sem causar um ciclo de dependência direto, garantindo a inicialização correta da aplicação. Refatorar o código para reduzir dependências bidirecionais e utilizar injeção de dependência de forma eficaz também são práticas recomendadas.
+
+### Limitação de Taxa (Rate Limiting)
+A limitação de taxa é uma técnica comum utilizada para proteger aplicações contra ataques de força bruta, limitando o número de requisições que um usuário pode fazer em um determinado período de tempo. Isso ajuda a prevenir abusos e garante o uso justo dos recursos. No NestJS, você pode implementar a limitação de taxa usando o pacote `@nestjs/throttler`.
