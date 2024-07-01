@@ -7,6 +7,9 @@ import { LogsInterceptor } from "./interceptors/log.interceptor";
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
+  app.enableCors({
+    origin: ["*"],
+  });
   app.useGlobalInterceptors(new LogsInterceptor());
   const config = new DocumentBuilder()
     .setTitle("Api-scheduling")
