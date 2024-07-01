@@ -8,7 +8,7 @@ import { AuthService } from "./auth.service";
 @Module({
   imports: [
     JwtModule.register({
-      secret: `95eb73e4d15d9fc5c0ac68e18b834fe9e8329420`,
+      secret: "95eb73e4d15d9fc5c0ac68e18b834fe9e8329420",
     }),
     forwardRef(() => UserModule), // resolvendo problema de dependencia circular, comum no nest
     PrismaModule,
