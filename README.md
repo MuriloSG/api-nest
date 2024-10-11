@@ -1,6 +1,20 @@
 # Repósitorio dedicado a construção de uma Api-rest usando Nest.js
 ## Conceitos Fundamentais do Nest.js
 
+### Para executar localmente:
+1. Clone o repositório:
+   ```bash
+   git clone <link-do-repositorio>
+2. Execute as migrations:
+   ```bash
+   npx prisma migrate dev
+3. Execute o projeto:
+   ```bash
+   npm run start:dev
+4. Certifque de configurar o provider do sqlite:
+
+### Banco de dados utilizado foi o Sqlite
+
 ### Bootstrap
 No contexto do Nest.js, o conceito de Bootstrap refere-se ao processo de inicialização da aplicação. Apesar de compartilhar o nome com o famoso framework de CSS, seu significado aqui é diferente. O bootstrap da aplicação é configurado no arquivo `main.ts`, seguindo o padrão de organização de pastas do Nest.js. Este arquivo é responsável por instanciar e configurar o módulo principal da aplicação.
 
