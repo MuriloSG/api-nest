@@ -12,7 +12,7 @@
    ```bash
    npm run start:dev
 4. Certifque de configurar o provider do sqlite:
-5. Todas as rotas estao nessa rota com suas devidas informações, é possivel testar por la, ou até mesmo por o insomnia.
+5. Todas as rotas estao nessa rota com suas devidas informações estão nessa rota estatica do swagguer: http://localhost:3000/docs#/ , é possivel testar por la, ou até mesmo por o insomnia.
 
 ### Banco de dados utilizado foi o Sqlite
 
