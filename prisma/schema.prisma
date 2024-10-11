@@ -8,15 +8,36 @@ datasource db {
 }
 
 model AppUser {
-  id       Int    @id @default(autoincrement())
-  name     String
-  email    String @unique
-  password String
-  phone    String @unique
-  city     String
-  role     Int    @default(1)
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  phone     String   @unique
+  city      String
+  role      Int      @default(1)
   createdAt DateTime @default(now())
-  updateAt DateTime @updatedAt
+  updateAt  DateTime @updatedAt
 
   @@map("app_users")
+}
+
+model Categoria {
+  id        Int       @id @default(autoincrement())
+  nome      String    @unique
+  produtos  Produto[] @relation("CategoriaProdutos")
+
+  @@map("categorias")
+}
+
+
+model Produto {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  price      Decimal?  @default(0.0) 
+  categoriaId Int?
+  categoria   Categoria? @relation("CategoriaProdutos", fields: [categoriaId], references: [id])
+
+  @@map("produtos")
 }

@@ -6,11 +6,15 @@ import { AuthModule } from "./auth/auth.module";
 import { ConfigModule } from "@nestjs/config";
 import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 import { APP_GUARD } from "@nestjs/core";
+import { ProductsModule } from "./products/products.module";
+import { CategoriesModule } from "./categories/category.module";
 
 @Module({
   imports: [
     forwardRef(() => UserModule),
     forwardRef(() => AuthModule),
+    forwardRef(() => ProductsModule),
+    forwardRef(() => CategoriesModule),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
